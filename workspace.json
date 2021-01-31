@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "personal-api",
+  "projects": {
+    "personal-api": {
+      "root": "apps/personal-api",
+      "sourceRoot": "apps/personal-api/src",
+      "projectType": "application",
+      "prefix": "personal-api",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/personal-api",
+            "main": "apps/personal-api/src/main.ts",
+            "tsConfig": "apps/personal-api/tsconfig.app.json",
+            "assets": ["apps/personal-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/personal-api/src/environments/environment.ts",
+                  "with": "apps/personal-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "personal-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/personal-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/personal-api"],
+          "options": {
+            "jestConfig": "apps/personal-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  }
+}
