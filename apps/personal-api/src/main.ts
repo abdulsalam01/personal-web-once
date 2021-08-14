@@ -5,6 +5,7 @@
 
 import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { Constant } from 'libs/constant';
 
 import { AppModule } from './app/app.module';
 
@@ -12,7 +13,7 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
+  const globalPrefix = Constant.PREFIX;
   const port = process.env.PORT || 3333;
 
   app.setGlobalPrefix(globalPrefix);
