@@ -23,12 +23,12 @@ export class MenuService {
 
   async getMenu(id: uuidv4): Promise<MenuModel | null> {
     return this.prisma.menu.findUnique({
-      where: id
+      where: { id: id }
     });
   }
 
   async createMenu(menu: Prisma.MenuCreateInput): Promise<MenuModel> {
-    return this.prisma.menu.create({data: menu});
+    return this.prisma.menu.create({ data: menu });
   }
 
   async updateMenu(params: {
@@ -39,11 +39,14 @@ export class MenuService {
 
     return this.prisma.menu.update({
       data,
-      where: id
+      where: { id: id }
     })
   }
 
   async deleteMenu(id: uuidv4): Promise<MenuModel> {
-    return this.prisma.menu.delete({ where: id });
+    return this.prisma.menu.delete(
+      { where:
+        { id: id }
+      });
   }
 }

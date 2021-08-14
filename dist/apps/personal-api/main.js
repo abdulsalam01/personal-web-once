@@ -369,7 +369,7 @@ let MenuService = class MenuService {
     getMenu(id) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             return this.prisma.menu.findUnique({
-                where: id
+                where: { id: id }
             });
         });
     }
@@ -383,13 +383,14 @@ let MenuService = class MenuService {
             const { id, data } = params;
             return this.prisma.menu.update({
                 data,
-                where: id
+                where: { id: id }
             });
         });
     }
     deleteMenu(id) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return this.prisma.menu.delete({ where: id });
+            return this.prisma.menu.delete({ where: { id: id }
+            });
         });
     }
 };
