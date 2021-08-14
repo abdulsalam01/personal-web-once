@@ -13,12 +13,16 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/personal-api",
             "main": "apps/personal-api/src/main.ts",
             "tsConfig": "apps/personal-api/tsconfig.app.json",
-            "assets": ["apps/personal-api/src/assets"]
+            "assets": [
+              "apps/personal-api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -40,20 +44,156 @@
             "buildTarget": "personal-api:build"
           }
         },
+        "run-live": {
+          "executor": "webpack --config webpack.config.js --watch",
+          "options": {
+            "buildTarget": "personal-api:build"
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/personal-api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/personal-api/**/*.ts"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/personal-api"],
+          "outputs": [
+            "coverage/apps/personal-api"
+          ],
           "options": {
             "jestConfig": "apps/personal-api/jest.config.js",
             "passWithNoTests": true
           }
         }
+      }
+    },
+    "personal-web": {
+      "root": "apps/personal-web",
+      "sourceRoot": "apps/personal-web/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/personal-web",
+            "index": "apps/personal-web/src/index.html",
+            "main": "apps/personal-web/src/main.tsx",
+            "polyfills": "apps/personal-web/src/polyfills.ts",
+            "tsConfig": "apps/personal-web/tsconfig.app.json",
+            "assets": [
+              "apps/personal-web/src/favicon.ico",
+              "apps/personal-web/src/assets"
+            ],
+            "styles": [
+              "apps/personal-web/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/personal-web/src/environments/environment.ts",
+                  "with": "apps/personal-web/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "personal-web:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "personal-web:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/personal-web/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/personal-web"
+          ],
+          "options": {
+            "jestConfig": "apps/personal-web/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "personal-web-e2e": {
+      "root": "apps/personal-web-e2e",
+      "sourceRoot": "apps/personal-web-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/personal-web-e2e/cypress.json",
+            "tsConfig": "apps/personal-web-e2e/tsconfig.e2e.json",
+            "devServerTarget": "personal-web:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "personal-web:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/personal-web-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
       }
     }
   }
