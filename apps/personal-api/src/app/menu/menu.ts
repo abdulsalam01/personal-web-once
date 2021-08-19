@@ -1,12 +1,12 @@
 import { Prisma } from "@prisma/client";
+import { Timestamp as DateTime } from "../utils/interfaces/common.interface";
 
 export interface MenuModel {
   id: string;
   name: string;
   link: string;
   order?: number;
-  createdAt?: Date;
-  UpdateAt?: Date;
+  timestamps?: DateTime;
 }
 
 export type MenuParams = {

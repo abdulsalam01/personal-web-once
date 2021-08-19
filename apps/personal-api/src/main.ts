@@ -16,9 +16,10 @@ async function bootstrap() {
   const globalPrefix = Constant.PREFIX;
   const port = process.env.PORT || 3333;
 
+  app.enableCors();
   app.setGlobalPrefix(globalPrefix);
   await app.listen(port, () => {
-    Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    Logger.log('Listening at http://localhost:' + port + globalPrefix);
   });
 
   hotReload(app);
